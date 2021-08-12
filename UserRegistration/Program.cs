@@ -13,8 +13,8 @@ namespace UserRegistrationRegex
         {
             try
             {
-                string pattern = "^[A-Z]{1}[a-z]{2,}$";
-                if (!Regex.IsMatch(name, pattern))
+                Func<string, bool> nameValidation = name => Regex.IsMatch(name, @"^[A-Z]{1}[a-z]{2,}$");
+                if (!nameValidation(name))
                 {
                     if (!char.IsUpper(name[0]))
                     {
@@ -25,7 +25,7 @@ namespace UserRegistrationRegex
                         throw new UserRegCustomException(UserRegCustomException.ExceptionType.MIN_THREE, "Name must contain minimum three letters");
                     }
                 }
-                return Regex.IsMatch(name, pattern);
+                return nameValidation(name);
             }
             catch (UserRegCustomException ex)
             {
@@ -45,12 +45,12 @@ namespace UserRegistrationRegex
         {
             try
             {
-                string pattern = "^[a-z]{2,}[-.+]?[a-z]*[0-9]*[@][a-z]*[0-9]*[.][a-z]{2,3}[.]{0,1}[a-z]{0,3}$";
-                if (!Regex.IsMatch(eMail, pattern))
+                Func<string, bool> emailValidation = eMail => Regex.IsMatch(eMail, @"^[a-z]{2,}[-.+]?[a-z]*[0-9]*[@][a-z]*[0-9]*[.][a-z]{2,3}[.]{0,1}[a-z]{0,3}$");
+                if (!emailValidation(eMail))
                 {
                     throw new UserRegCustomException(UserRegCustomException.ExceptionType.INVALID_EMAIL, "Invalid Email ID");
                 }
-                return Regex.IsMatch(eMail, pattern);
+                return emailValidation(eMail);
             }
             catch (UserRegCustomException ex)
             {
@@ -66,12 +66,12 @@ namespace UserRegistrationRegex
         {
             try
             {
-                string pattern = "^[9][1][ ][6-9][0-9]{9}$";
-                if (!Regex.IsMatch(number,pattern))
+                Func<string, bool> numberValidation = number => Regex.IsMatch(number, @"^[9][1][ ][6-9][0-9]{9}$");
+                if (!numberValidation(number))
                 {
                     throw new UserRegCustomException(UserRegCustomException.ExceptionType.INVALID_PHONE_NUMBER, "Invalid Phone Number");
                 }
-                return Regex.IsMatch(number, pattern);
+                return numberValidation(number);
             }
             catch (UserRegCustomException ex)
             {
@@ -87,12 +87,12 @@ namespace UserRegistrationRegex
         {
             try
             {
-                string pattern = "^.*[!@#$%^&*,.-_][0-9]*.*$";
-                if (!Regex.IsMatch(password,pattern))
+                Func<string, bool> passwordValidation = password => Regex.IsMatch(password, @"^(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).+$");
+                if (!passwordValidation(password))
                 {
                     throw new UserRegCustomException(UserRegCustomException.ExceptionType.INVALID_PASSWORD, "Invalid password");
                 }
-                return Regex.IsMatch(password, pattern);
+                return passwordValidation(password);
             }
             catch (UserRegCustomException ex)
             {

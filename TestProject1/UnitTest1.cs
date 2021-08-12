@@ -7,9 +7,9 @@ namespace TestProject1
     public class UnitTest1
     {
         [TestMethod]
-        //[DataRow("ariprasath")]
-        //[DataRow("Ra")]
-        [DataRow(null)]
+        [DataRow("Ariprasath")]
+        [DataRow("Ramu")]
+        [DataRow("Ari")]
         public void FirstName(string name)
         {
             Assert.IsTrue(Program.NameCheck(name));
